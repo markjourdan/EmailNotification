@@ -147,6 +147,10 @@ namespace EmailNotification.Config
             var smtpServerConnectionLimit = setting.Attribute("smtpServerConnectionLimit");
             if (smtpServerConnectionLimit != null)
                 config.ServerSettings.ConnectionLimit = Convert.ToInt32(smtpServerConnectionLimit.Value);
+
+            var useDefaultCredentials = setting.Attribute("useDefaultCredentials");
+            if (useDefaultCredentials != null)
+                config.ServerSettings.UseDefaultCredentials = Convert.ToBoolean(useDefaultCredentials.Value);
         }
     }
 
@@ -173,6 +177,7 @@ namespace EmailNotification.Config
         internal int ConnectionLimit { get; set; }
         internal bool IsSslEnabled { get; set; }
         internal bool IsLoginRequired { get; set; }
+        internal bool UseDefaultCredentials { get; set; }
     }
 
     internal class DefaultFromConfig

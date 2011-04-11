@@ -30,7 +30,8 @@ namespace EmailNotification
                                              SmtpServerConnectionLimit = section.ServerSettings.ConnectionLimit,
                                              SmtpServerPassword = section.ServerSettings.Password,
                                              SmtpServerRequiredLogin = section.ServerSettings.IsLoginRequired,
-                                             SmtpServerUserName = section.ServerSettings.UserName
+                                             SmtpServerUserName = section.ServerSettings.UserName,
+                                             UseDefaultCredentials = section.ServerSettings.UseDefaultCredentials
                                          },
                                  Enabled = section.IsEnabled,
                                  FromDefaultEmailAddress = section.DefaultFrom.EmailAddress,
