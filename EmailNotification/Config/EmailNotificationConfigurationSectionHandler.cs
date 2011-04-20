@@ -128,6 +128,10 @@ namespace EmailNotification.Config
             if (smtpServer != null)
                 config.ServerSettings.ServerName = smtpServer.Value;
 
+            var smtpServerPort = setting.Attribute("smtpServerPort");
+            if (smtpServerPort != null)
+                config.ServerSettings.Port = Convert.ToInt32(smtpServerPort.Value);
+
             var smtpServerUser = setting.Attribute("smtpServerUser");
             if (smtpServerUser != null)
                 config.ServerSettings.UserName = smtpServerUser.Value;
@@ -176,6 +180,7 @@ namespace EmailNotification.Config
     internal class ServerSettingsConfig
     {
         internal string ServerName { get; set; }
+        internal int Port { get; set; }
         internal string UserName { get; set; }
         internal string Password { get; set; }
         internal int ConnectionLimit { get; set; }

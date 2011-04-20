@@ -26,6 +26,7 @@ namespace EmailNotification
                                      new DefaultServerConfiguration
                                          {
                                              SmtpServer = section.ServerSettings.ServerName,
+                                             SmtpServerPort = section.ServerSettings.Port,
                                              IsSSLEnabled = section.ServerSettings.IsSslEnabled,
                                              SmtpServerConnectionLimit = section.ServerSettings.ConnectionLimit,
                                              SmtpServerPassword = section.ServerSettings.Password,
