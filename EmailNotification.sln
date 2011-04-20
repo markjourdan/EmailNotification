@@ -35,4 +35,9 @@ Global
 		{F7801F7E-B8CB-4347-9F88-6DC64337B46E} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
 		{D8022C88-5080-47B3-9567-C80D6A1D3482} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
+	EndGlobalSection
 EndGlobal
