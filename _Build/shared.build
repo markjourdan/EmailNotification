@@ -47,6 +47,7 @@
 			    <echo message=""/>
 			    <echo message="Updating: ${assembly.info}" />
 			    <exec program="${system.tools.directory}\UpdateVersion\UpdateVersion.exe" commandline="-b BuildDay -r Increment -i &quot;${assembly.info}&quot; -o &quot;${assembly.info}&quot;" verbose="true" workingdir="${solution.path}" />
+			    <exec program="${system.tools.directory}\UpdateVersion\UpdateVersion.exe" commandline="-v File -b BuildDay -r Increment -i &quot;${assembly.info}&quot; -o &quot;${assembly.info}&quot;" verbose="true" workingdir="${solution.path}" />
 				<echo message=""/>
 			</do>
 		</foreach>
