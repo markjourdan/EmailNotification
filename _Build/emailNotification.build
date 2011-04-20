@@ -33,7 +33,7 @@
 	  <include name="**/*/AssemblyInfo.cs" />
 	</fileset>
 	
-	<property name="solution.path" value="${emailnotification.solution.path}\${emailnotification.solution.name}" />
+	<property name="solution.path" value="${emailnotification.solution.path}\" />
 	
     <call target="version.assemblies"/> 
     
@@ -87,17 +87,64 @@
   </target>
 
   <target name="emailnotification.package">	  
-    <property name="emailnotification.zip.file" value="Email Notification ${solution.configuration} ${version.number}.zip" />
+    <property name="emailnotification.compiled.zip.file" value="Email Notification Compiled ${solution.configuration} ${version.number}.zip" />
+    <property name="emailnotification.source.zip.file" value="Email Notification Source ${solution.configuration} ${version.number}.zip" />
+    <property name="emailnotification.full.zip.file" value="Email Notification ${solution.configuration} ${version.number}.zip" />
 
-    <zip zipfile="${base.directory}\installs\${emailnotification.zip.file}">
+    <zip zipfile="${base.directory}\installs\${emailnotification.compiled.zip.file}">
       <fileset basedir="${base.directory}\EmailNotification\">
         <include name="app.config" />	 
 		<include name="**.dll" />
 		<include name="**.pdb" />
         <exclude name="**/**Tests.dll" />
         <exclude name="**/**obj/**" />
-	<exclude name="**/**Logs/**" />
-	<exclude name="**/*.cs" />
+		<exclude name="**/**Logs/**" />
+		<exclude name="**/*.cs" />
+      </fileset>
+    </zip>
+	
+	<zip zipfile="${base.directory}\installs\${emailnotification.source.zip.file}">
+      <fileset basedir="${base.directory}\" prefix="Email Notification">
+        <include name="app.config" />	 
+		<include name="**.cs" />
+		<include name="**.sln" />
+		<include name="**.csproj" />
+		<include name="**/Dependencies/**" />
+        <exclude name="**/**Tests.dll" />
+        <exclude name="**/**obj/**" />
+		<exclude name="**/**Logs/**" />
+		<exclude name="**/**bin/**" />
+		<exclude name="**/**installs/**" />
+		<exclude name="**/**_ReSharper**/**" />
+		<exclude name="**/**.svn**/**" />
+      </fileset>
+    </zip>
+	
+	<zip zipfile="${base.directory}\installs\${emailnotification.full.zip.file}">
+	  <fileset basedir="${base.directory}\EmailNotification\" prefix="Email Notification\Compiled">
+        <include name="app.config" />	 
+		<include name="**.dll" />
+		<include name="**.pdb" />
+        <exclude name="**/**Tests.dll" />
+        <exclude name="**/**obj/**" />
+		<exclude name="**/**Logs/**" />
+		<exclude name="**/*.cs" />
+      </fileset>
+      <fileset basedir="${base.directory}\" prefix="Email Notification\Source">
+        <include name="app.config" />	 
+		<include name="**.cs" />
+		<include name="**.sln" />
+		<include name="**.snk" />
+		<include name="**.config" />
+		<include name="**.csproj" />
+		<include name="**/Dependencies/**" />
+        <exclude name="**/**Tests.dll" />
+        <exclude name="**/**obj/**" />
+		<exclude name="**/**Logs/**" />
+		<exclude name="**/**bin/**" />
+		<exclude name="**/**installs/**" />
+		<exclude name="**/**_ReSharper**/**" />
+		<exclude name="**/**.svn**/**" />
       </fileset>
     </zip>
     
