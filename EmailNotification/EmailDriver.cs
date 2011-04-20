@@ -24,7 +24,7 @@ namespace EmailNotification
             
             configuration.EmailQueue = configuration.EmailQueue.OrderByDescending(e => e.Created);
             var serverConnectionAttempt = 0;
-            var client = GetEmailClient(configuration.ServerConfiguration);
+            var client = GetEmailClient(configuration);
 
             foreach (var email in configuration.EmailQueue)
             {
@@ -163,21 +163,22 @@ namespace EmailNotification
             return message;
         }
 
-        private static SmtpClient GetEmailClient(IServerConfiguration serverConfiguration)
+        private static SmtpClient GetEmailClient(Configuration configuration)
         {
             var client = new SmtpClient
                              {
-                                 Host = serverConfiguration.SmtpServer,
-                                 EnableSsl = serverConfiguration.IsSSLEnabled,
+                                 Host = configuration.ServerConfiguration.SmtpServer,
+                                 EnableSsl = configuration.ServerConfiguration.IsSSLEnabled,
                                  DeliveryMethod = SmtpDeliveryMethod.Network,
-                                 Port = serverConfiguration.SmtpServerPort,
-                                 UseDefaultCredentials = serverConfiguration.UseDefaultCredentials
+                                 Port = configuration.ServerConfiguration.SmtpServerPort,
+                                 UseDefaultCredentials = configuration.ServerConfiguration.UseDefaultCredentials,
                              };
 
-            if (serverConfiguration.Timeout.HasValue) client.Timeout = serverConfiguration.Timeout.GetValueOrDefault();
+            if (configuration.ServerConfiguration.Timeout.HasValue) client.Timeout = configuration.ServerConfiguration.Timeout.GetValueOrDefault();
+            if (configuration.SendCompletedEventHandler != null) client.SendCompleted += configuration.SendCompletedEventHandler;
 
-            if (serverConfiguration.SmtpServerRequiredLogin)
-                client.Credentials = new NetworkCredential(serverConfiguration.SmtpServerUserName, serverConfiguration.SmtpServerPassword);
+            if (configuration.ServerConfiguration.SmtpServerRequiredLogin)
+                client.Credentials = new NetworkCredential(configuration.ServerConfiguration.SmtpServerUserName, configuration.ServerConfiguration.SmtpServerPassword);
             return client;
         }
 
