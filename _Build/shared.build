@@ -60,7 +60,7 @@
 	<property name="strong.name.solution" value="false" />
 	<property name="shared.included" value="true"/>
 
-	<property name="version.number" value="1.0.0.0" unless="${property::exists('CCNetLabel')}" />
+	<property name="version.number" value="0.1.0.0" unless="${property::exists('CCNetLabel')}" />
 	
 	<target name="create_solution_info">
 		<echo message="Using version number: ${version.number}" />

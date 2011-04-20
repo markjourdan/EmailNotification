@@ -29,9 +29,11 @@
   <target name="emailnotification.compile.solution">
 	<property name="strong.name.solution" value="true" />
 
-	<fileset id="assemblyinfo.fileset" basedir="${system.directory}">
+	<fileset id="assemblyinfo.fileset" basedir="${base.directory}">
 	  <include name="**/*/AssemblyInfo.cs" />
 	</fileset>
+	
+	<property name="solution.path" value="${emailnotification.solution.path}\${emailnotification.solution.name}" />
 	
     <call target="version.assemblies"/> 
     
