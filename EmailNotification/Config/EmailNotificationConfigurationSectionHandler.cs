@@ -151,6 +151,10 @@ namespace EmailNotification.Config
             var useDefaultCredentials = setting.Attribute("useDefaultCredentials");
             if (useDefaultCredentials != null)
                 config.ServerSettings.UseDefaultCredentials = Convert.ToBoolean(useDefaultCredentials.Value);
+
+            var timeout = setting.Attribute("timeout");
+            if (timeout != null)
+                config.ServerSettings.Timeout = Convert.ToInt32(timeout.Value);
         }
     }
 
@@ -178,6 +182,7 @@ namespace EmailNotification.Config
         internal bool IsSslEnabled { get; set; }
         internal bool IsLoginRequired { get; set; }
         internal bool UseDefaultCredentials { get; set; }
+        internal int? Timeout { get; set; }
     }
 
     internal class DefaultFromConfig
