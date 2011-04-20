@@ -2,6 +2,8 @@
 <project name="Shared" default="build" basedir="." xmlns="http://nant.sf.net/release/0.85/nant.xsd">
 
 	<property name="MSBuildPath" value="C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" />
+	<property name="windows.sdk.bin.path" value="C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\" />
+	<property name="nant.settings.currentframework" value="net-4.0"/>
 	
 	<!-- System Info -->
 	<property name="build.directory" value="${system.directory}\Build" />
@@ -28,7 +30,6 @@
 		<call target="create.branch.vdir" />
 	</target>
 	
-	<property name="windows.sdk.bin.path" value="C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\" />
 	
 	<!-- Assembly Versioning -->
 	<property name="solution.path" value="" />
