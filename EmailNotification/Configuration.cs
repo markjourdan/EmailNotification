@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EmailNotification
 {
@@ -71,6 +72,7 @@ namespace EmailNotification
             SmtpServerUserName = null;
             IsSSLEnabled = false;
             UseDefaultCredentials = false;
+            Timeout = null;
         }
 
         public string SmtpServer { get; internal set; }
@@ -81,5 +83,6 @@ namespace EmailNotification
         public bool IsSSLEnabled { get; internal set; }
         public int SmtpServerPort { get; internal set; }
         public bool UseDefaultCredentials { get; internal set; }
+        public int? Timeout { get; internal set; }
     }
 }

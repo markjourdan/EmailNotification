@@ -10,5 +10,6 @@
         bool IsSSLEnabled { get; }
         int SmtpServerPort { get; }
         bool UseDefaultCredentials { get; }
+        int? Timeout { get; }
     }
 }

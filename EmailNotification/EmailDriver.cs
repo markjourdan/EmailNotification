@@ -174,6 +174,8 @@ namespace EmailNotification
                                  UseDefaultCredentials = serverConfiguration.UseDefaultCredentials
                              };
 
+            if (serverConfiguration.Timeout.HasValue) client.Timeout = serverConfiguration.Timeout.GetValueOrDefault();
+
             if (serverConfiguration.SmtpServerRequiredLogin)
                 client.Credentials = new NetworkCredential(serverConfiguration.SmtpServerUserName, serverConfiguration.SmtpServerPassword);
             return client;
