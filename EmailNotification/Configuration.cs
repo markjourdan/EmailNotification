@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace EmailNotification
 {
@@ -50,6 +50,12 @@ namespace EmailNotification
             return this;
         }
 
+        public Configuration WithSendCompletedEvent(SendCompletedEventHandler sendCompletedEventHandler)
+        {
+            SendCompletedEventHandler = sendCompletedEventHandler;
+            return this;
+        }
+
         internal IServerConfiguration ServerConfiguration { get; set; }
         internal bool Enabled { get; set; }
         internal string FromDefaultEmailAddress { get; set; }
@@ -58,6 +64,7 @@ namespace EmailNotification
         internal bool IsTestEmailAccountsBlocked { get; set; }
         internal IEnumerable<string> TestEmailAccounts { get; set; }
         internal IEmailLog Log { get; set; }
+        internal SendCompletedEventHandler SendCompletedEventHandler { get; set; }
     }
 
     internal class DefaultServerConfiguration : IServerConfiguration
