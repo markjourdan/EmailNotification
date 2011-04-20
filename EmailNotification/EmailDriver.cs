@@ -171,7 +171,7 @@ namespace EmailNotification
                                  EnableSsl = configuration.ServerConfiguration.IsSSLEnabled,
                                  DeliveryMethod = SmtpDeliveryMethod.Network,
                                  Port = configuration.ServerConfiguration.SmtpServerPort,
-                                 UseDefaultCredentials = configuration.ServerConfiguration.UseDefaultCredentials,
+                                 UseDefaultCredentials = configuration.ServerConfiguration.UseDefaultCredentials
                              };
 
             if (configuration.ServerConfiguration.Timeout.HasValue) client.Timeout = configuration.ServerConfiguration.Timeout.GetValueOrDefault();
