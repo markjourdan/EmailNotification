@@ -3,4 +3,4 @@
 *.suo
 packages
 installs
-</Value></Property></Properties></ItemProperties>
+</Value></Property><Property><Name>svn:mime-type</Name><Value>application/octet-stream</Value></Property></Properties></ItemProperties>
