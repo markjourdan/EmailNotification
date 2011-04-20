@@ -12,6 +12,12 @@ namespace EmailNotification
     {
         internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure store email.";
         internal const string EmailNotificationFailedToSendEmailTo = "Email Notification: failed to send email to {0}.";
+        internal const string SmtpFailedRecipientsExceptionFailToSendEmailTo =
+            "Email Notification: The message could not be delivered to the recipient for email {0}";
+        internal const string InvalidOperationExceptionFailedToSendEmailTo =
+            "Email Notification: A delivery method configuration issue has occurred. Failed to send email to {0}.";
+        internal const string ArgumentNullExceptionFailedToSendEmailTo = "Email Notification: Your sender or recipient is null for email {0}.";
+        internal const string SmtpExceptionFaildToSendEmailTo = "Email Notification: A connection to the SMTP server failed. Failed to send email to {0}.";
         internal const string SentTotalOfEmails = "Sent total of {0} emails.";
         
         /// <summary>
@@ -44,28 +50,19 @@ namespace EmailNotification
                 }
                 catch (SmtpFailedRecipientsException ex)
                 {
-                    WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                               String.Format(
-                                   EmailNotificationFailedToSendEmailTo,
-                                   message.To), ex);
+                    WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(SmtpFailedRecipientsExceptionFailToSendEmailTo, message.To), ex);
                 }
                 catch (ArgumentNullException ex)
                 {
-                    WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                               String.Format(
-                                   EmailNotificationFailedToSendEmailTo,
-                                   message.To), ex);
+                    WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(ArgumentNullExceptionFailedToSendEmailTo, message.To), ex);
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                               String.Format(
-                                   EmailNotificationFailedToSendEmailTo,
-                                   message.To), ex);
+                    WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
                 }
                 catch (SmtpException ex)
                 {
-                    WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(EmailNotificationFailedToSendEmailTo, email.To), ex);
+                    WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(SmtpExceptionFaildToSendEmailTo, email.To), ex);
 
                     var parameters = GetServerParametersString(configuration.ServerConfiguration);
                     parameters += GetEmailParametersString(email, message.From.Address);
@@ -73,8 +70,7 @@ namespace EmailNotification
                 }
                 catch (InvalidOperationException ex)
                 {
-                    WriteToLog(EventLogEntryType.Error, configuration.Log,
-                               String.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
+                    WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(InvalidOperationExceptionFailedToSendEmailTo, message.To), ex);
 
                     var parameters = GetServerParametersString(configuration.ServerConfiguration);
                     parameters += GetEmailParametersString(email, message.From.Address);
@@ -82,8 +78,7 @@ namespace EmailNotification
                 }
                 catch (Exception ex)
                 {
-                    WriteToLog(EventLogEntryType.Error, configuration.Log,
-                               String.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
+                    WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
 
                     var parameters = GetServerParametersString(configuration.ServerConfiguration);
                     parameters += GetEmailParametersString(email, message.From.Address);
