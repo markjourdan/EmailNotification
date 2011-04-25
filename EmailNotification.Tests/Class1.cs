@@ -8,6 +8,7 @@ namespace EmailNotification.Tests
     public class Class1
     {
         [Test]
+        [Ignore]
         public void Test1()
         {
             var serverConfig = MockRepository.GenerateMock<IServerConfiguration>();

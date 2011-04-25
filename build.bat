@@ -1,5 +1,5 @@
 
-nant -buildfile:_Build\emailNotification.build
+nant -buildfile:_Build\emailNotification.build -D:build.configuration=Release
 
 
 pause
