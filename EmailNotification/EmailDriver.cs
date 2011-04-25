@@ -36,6 +36,8 @@ namespace EmailNotification
             {
                 var message = GetMailMessage(configuration, email);
 
+                if(message == null) continue;
+
                 try
                 {
                     if (IsTestEmailDetected(configuration, email))
@@ -115,6 +117,12 @@ namespace EmailNotification
 
         private static MailMessage GetMailMessage(Configuration configuration, MessageQueueEntity email)
         {
+            if (String.IsNullOrWhiteSpace(email.From) && String.IsNullOrWhiteSpace(configuration.FromDefaultEmailAddress))
+            {
+                WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorFromAddressNotConfigured);
+                return null;
+            }
+
             var message = new MailMessage
                               {
                                   Priority = email.Priority,
@@ -124,16 +132,10 @@ namespace EmailNotification
                                   Body = email.Body,
                                   IsBodyHtml = email.BodyFormat == BodyFormat.Html,
                                   From =
-                                      email.From == String.Empty
+                                      String.IsNullOrWhiteSpace(email.From)
                                           ? new MailAddress(configuration.FromDefaultEmailAddress, configuration.FromDefaultEmailName)
                                           : new MailAddress(email.From)
                               };
-
-            if (String.IsNullOrWhiteSpace(email.From))
-            {
-                WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorFromAddressNotConfigured);
-                return message;
-            }
 
             foreach (var emailTo in email.To.Split(new[] { ';', ',' }))
             {
