@@ -4,4 +4,9 @@ obj
 obj
 *.nupkg
 packages.config
+</Value></Property><Property><Name>svn:ignore</Name><Value>bin
+obj
+*.nupkg
+packages.config
+*.user
 </Value></Property></Properties></ItemProperties>
