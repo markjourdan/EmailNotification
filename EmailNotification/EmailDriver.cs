@@ -48,7 +48,6 @@ namespace EmailNotification
                             }
                             ++serverConnectionAttempt;
                             client.Send(message);
-                            client.Send(message);
                             email.IsSent = true;
                             email.Sent = DateTime.UtcNow;
                         }
