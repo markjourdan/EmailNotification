@@ -73,7 +73,7 @@ namespace EmailNotification
         {
             SmtpServer = null;
             SmtpServerPort = 25;
-            SmtpServerConnectionLimit = 4;
+            SmtpServerConnectionLimit = -1;
             SmtpServerPassword = null;
             SmtpServerRequiredLogin = false;
             SmtpServerUserName = null;
