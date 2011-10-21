@@ -166,7 +166,31 @@ namespace EmailNotification
                     message.Bcc.Add(new MailAddress(emailBcc));
                 }
             }
+
+            if(message.Attachments.Any())
+                GetMailMessageAttachments(email, message);
+
             return message;
+        }
+
+        private static void GetMailMessageAttachments(MessageQueueEntity email, MailMessage message)
+        {
+            foreach (var messageQueueAttachementEntity in email.Attachments)
+            {
+                if (!String.IsNullOrWhiteSpace(messageQueueAttachementEntity.FileName))
+                {
+                    message.Attachments.Add(messageQueueAttachementEntity.ContentType != null
+                                                ? new Attachment(messageQueueAttachementEntity.FileName, messageQueueAttachementEntity.ContentType)
+                                                : new Attachment(messageQueueAttachementEntity.FileName));
+                }
+                else if (messageQueueAttachementEntity.ContentStream != null)
+                {
+                    if(messageQueueAttachementEntity.ContentType == null)
+                        throw new Exception("The message content type needs to be set when sending in an attachment Stream.");
+
+                    message.Attachments.Add(new Attachment(messageQueueAttachementEntity.ContentStream, messageQueueAttachementEntity.ContentType));
+                }
+            }
         }
 
         private static SmtpClient GetEmailClient(Configuration configuration)
