@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mail;
 
 namespace EmailNotification
@@ -30,6 +31,8 @@ namespace EmailNotification
         public bool IsSent { get; set; }
 
         public bool IsTestEmail { get; set; }
+
+        public IEnumerable<MessageQueueAttachementEntity> Attachments { get; set; }
     }
 
     public enum BodyFormat
