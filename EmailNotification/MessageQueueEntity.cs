@@ -32,6 +32,8 @@ namespace EmailNotification
 
         public bool IsTestEmail { get; set; }
 
+        public Exception SentException { get; set; }
+
         public IEnumerable<MessageQueueAttachementEntity> Attachments { get; set; }
     }
 

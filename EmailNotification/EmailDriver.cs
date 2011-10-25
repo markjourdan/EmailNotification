@@ -11,6 +11,7 @@ namespace EmailNotification
     public class EmailDriver
     {
         internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure store email.";
+        internal const string ErrorToAddressNotSet = "Email Notification: 'to' property is empty.";
         internal const string EmailNotificationFailedToSendEmailTo = "Email Notification: failed to send email to {0}.";
         internal const string SmtpFailedRecipientsExceptionFailToSendEmailTo =
             "Email Notification: The message could not be delivered to the recipient for email {0}";
@@ -45,7 +46,7 @@ namespace EmailNotification
                             {
                                 email.IsTestEmail = true;
                                 continue;
-                            }
+                            } 
                             ++serverConnectionAttempt;
                             client.Send(message);
                             email.IsSent = true;
@@ -55,16 +56,22 @@ namespace EmailNotification
                         {
                             WriteToLog(EventLogEntryType.Warning, configuration.Log,
                                        string.Format(SmtpFailedRecipientsExceptionFailToSendEmailTo, message.To), ex);
+
+                            email.SentException = ex;
                         }
                         catch (ArgumentNullException ex)
                         {
                             WriteToLog(EventLogEntryType.Warning, configuration.Log,
                                        string.Format(ArgumentNullExceptionFailedToSendEmailTo, message.To), ex);
+
+                            email.SentException = ex;                            
                         }
                         catch (ArgumentOutOfRangeException ex)
                         {
                             WriteToLog(EventLogEntryType.Warning, configuration.Log,
                                        string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
+
+                            email.SentException = ex;
                         }
                         catch (SmtpException ex)
                         {
@@ -74,6 +81,8 @@ namespace EmailNotification
                             var parameters = GetServerParametersString(configuration.ServerConfiguration);
                             parameters += GetEmailParametersString(email, message.From.Address);
                             configuration.Log.Error(parameters);
+
+                            email.SentException = ex;
                         }
                         catch (InvalidOperationException ex)
                         {
@@ -83,6 +92,8 @@ namespace EmailNotification
                             var parameters = GetServerParametersString(configuration.ServerConfiguration);
                             parameters += GetEmailParametersString(email, message.From.Address);
                             configuration.Log.Error(parameters);
+
+                            email.SentException = ex;
                         }
                         catch (Exception ex)
                         {
@@ -92,6 +103,8 @@ namespace EmailNotification
                             var parameters = GetServerParametersString(configuration.ServerConfiguration);
                             parameters += GetEmailParametersString(email, message.From.Address);
                             configuration.Log.Error(parameters);
+
+                            email.SentException = ex;
                         }
 
                         if (configuration.ServerConfiguration.SmtpServerConnectionLimit > 0
@@ -129,6 +142,14 @@ namespace EmailNotification
             if (String.IsNullOrWhiteSpace(email.From) && String.IsNullOrWhiteSpace(configuration.FromDefaultEmailAddress))
             {
                 WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorFromAddressNotConfigured);
+                email.SentException = new Exception(ErrorFromAddressNotConfigured);
+                return null;
+            }
+
+            if (String.IsNullOrWhiteSpace(email.To))
+            {
+                WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorFromAddressNotConfigured);
+                email.SentException = new Exception(ErrorToAddressNotSet);
                 return null;
             }
 
