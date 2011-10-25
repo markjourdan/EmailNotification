@@ -167,7 +167,7 @@ namespace EmailNotification
                 }
             }
 
-            if (email.Attachments.Any())
+            if (email.Attachments != null && email.Attachments.Any())
                 GetMailMessageAttachments(email, message);
 
             return message;
