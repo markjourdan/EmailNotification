@@ -37,8 +37,8 @@ namespace EmailNotification
             {
                 using (var message = GetMailMessage(configuration, email))
                 {
-                    if (message == null) continue;
                     email.IsSent = false;
+                    if (message == null) continue;
 
                     try
                     {
