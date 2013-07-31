@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification", "EmailNotification\EmailNotification.csproj", "{47720915-7939-4244-8D40-E62900916A1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B80A2091-F58E-4886-94E4-B4CE8AB40E91}"
@@ -10,6 +10,23 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.Tests", "EmailNotification.Tests\EmailNotification.Tests.csproj", "{D8022C88-5080-47B3-9567-C80D6A1D3482}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs09
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = EmailNotification\\EmailNotification.csproj
+		SccProjectName1 = EmailNotification
+		SccLocalPath1 = EmailNotification
+		SccProjectUniqueName2 = EmailNotification.ServiceTest\\EmailNotification.ServiceTest.csproj
+		SccProjectTopLevelParentUniqueName2 = EmailNotification.sln
+		SccProjectName2 = EmailNotification.ServiceTest
+		SccLocalPath2 = EmailNotification.ServiceTest
+		SccProjectUniqueName3 = EmailNotification.Tests\\EmailNotification.Tests.csproj
+		SccProjectTopLevelParentUniqueName3 = EmailNotification.sln
+		SccProjectName3 = EmailNotification.Tests
+		SccLocalPath3 = EmailNotification.Tests
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -36,8 +53,8 @@ Global
 		{D8022C88-5080-47B3-9567-C80D6A1D3482} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.None.None
-		BuildVersion_UpdateFileVersion = False
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.None.None
 	EndGlobalSection
 EndGlobal

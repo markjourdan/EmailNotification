@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using EmailNotification.Config;
+using EmailNotification.Framework;
 
 namespace EmailNotification
 {
@@ -45,17 +46,25 @@ namespace EmailNotification
 
         public static EmailNotificationResult Execute(Configuration configuration)
         {
-            if (!configuration.Enabled)
-                return new EmailNotificationResult(false, configuration.EmailQueue);
-            
-            return SendEmails(configuration);
+            using (var client = new EmailNotificationSmtpClient(configuration))
+            {
+                return Execute(configuration, client);
+            }
         }
 
-        private static EmailNotificationResult SendEmails(Configuration configuration)
+        public static EmailNotificationResult Execute(Configuration configuration, ISmtpClient smtpClient)
+        {
+            if (!configuration.Enabled)
+                return new EmailNotificationResult(false, configuration.EmailQueue);
+
+            return SendEmails(configuration, smtpClient);
+        }
+
+        private static EmailNotificationResult SendEmails(Configuration configuration, ISmtpClient smtpClient)
         {
             try
             {
-                EmailDriver.SendQueuedEmails(configuration);
+                EmailDriver.SendQueuedEmails(configuration, smtpClient);
             }
             catch (Exception)
             {

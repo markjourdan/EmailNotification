@@ -15,12 +15,12 @@ namespace EmailNotification
 
         public int EmailSent
         {
-            get { return Emails.Where(e => e.IsSent).Count(); }
+            get { return Emails.Count(e => e.IsSent); }
         }
 
         public int TestEmails
         {
-            get { return Emails.Where(e => e.IsTestEmail).Count(); }
+            get { return Emails.Count(e => e.IsTestEmail); }
         }
 
         public bool IsSuccess { get; set; }

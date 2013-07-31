@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading;
+using EmailNotification.Framework;
 
 namespace EmailNotification
 {
@@ -13,110 +13,104 @@ namespace EmailNotification
         internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure store email.";
         internal const string ErrorToAddressNotSet = "Email Notification: 'to' property is empty.";
         internal const string EmailNotificationFailedToSendEmailTo = "Email Notification: failed to send email to {0}.";
-        internal const string SmtpFailedRecipientsExceptionFailToSendEmailTo =
-            "Email Notification: The message could not be delivered to the recipient for email {0}";
-        internal const string InvalidOperationExceptionFailedToSendEmailTo =
-            "Email Notification: A delivery method configuration issue has occurred. Failed to send email to {0}.";
+        internal const string SmtpFailedRecipientsExceptionFailToSendEmailTo = "Email Notification: The message could not be delivered to the recipient for email {0}";
+        internal const string InvalidOperationExceptionFailedToSendEmailTo = "Email Notification: A delivery method configuration issue has occurred. Failed to send email to {0}.";
         internal const string ArgumentNullExceptionFailedToSendEmailTo = "Email Notification: Your sender or recipient is null for email {0}.";
         internal const string SmtpExceptionFaildToSendEmailTo = "Email Notification: A connection to the SMTP server failed. Failed to send email to {0}.";
         internal const string SentTotalOfEmails = "Sent total of {0} emails.";
+
         
         /// <summary>
         /// Send a collection of Queued Emails
         /// </summary>
         /// <returns>Returns total amount of successfully sent emails</returns>
-        public static void SendQueuedEmails(Configuration configuration)
+        public static void SendQueuedEmails(Configuration configuration, ISmtpClient smtpClient)
         {
-            if (configuration.EmailQueue.Count() == 0) return;
+            var clock = new Clock();
+
+            if (!configuration.EmailQueue.Any()) return;
             
             configuration.EmailQueue = configuration.EmailQueue.OrderByDescending(e => e.Created);
             var serverConnectionAttempt = 0;
 
-            using (var client = GetEmailClient(configuration))
+            foreach (var email in configuration.EmailQueue)
             {
-                foreach (var email in configuration.EmailQueue)
+                using (var message = GetMailMessage(configuration, email))
                 {
-                    using (var message = GetMailMessage(configuration, email))
+                    if (message == null) continue;
+                    email.IsSent = false;
+
+                    try
                     {
-                        if (message == null) continue;
-
-                        try
+                        if (IsTestEmailDetected(configuration, email))
                         {
-                            if (IsTestEmailDetected(configuration, email))
-                            {
-                                email.IsTestEmail = true;
-                                continue;
-                            } 
-                            ++serverConnectionAttempt;
-                            client.Send(message);
+                            email.IsTestEmail = true;
                             email.IsSent = true;
-                            email.Sent = DateTime.UtcNow;
-                        }
-                        catch (SmtpFailedRecipientsException ex)
-                        {
-                            WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                                       string.Format(SmtpFailedRecipientsExceptionFailToSendEmailTo, message.To), ex);
+                            email.Sent = clock.UtcNow;
+                            continue;
+                        } 
+                        ++serverConnectionAttempt;
+                        smtpClient.Send(message);
+                        email.IsSent = true;
+                        email.Sent = clock.UtcNow;
+                    }
+                    catch (SmtpFailedRecipientsException ex)
+                    {
+                        WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(SmtpFailedRecipientsExceptionFailToSendEmailTo, message.To), ex);
 
-                            email.SentException = ex;
-                        }
-                        catch (ArgumentNullException ex)
-                        {
-                            WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                                       string.Format(ArgumentNullExceptionFailedToSendEmailTo, message.To), ex);
+                        email.SentException = ex;
+                    }
+                    catch (ArgumentNullException ex)
+                    {
+                        WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(ArgumentNullExceptionFailedToSendEmailTo, message.To), ex);
 
-                            email.SentException = ex;                            
-                        }
-                        catch (ArgumentOutOfRangeException ex)
-                        {
-                            WriteToLog(EventLogEntryType.Warning, configuration.Log,
-                                       string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
+                        email.SentException = ex;                            
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        WriteToLog(EventLogEntryType.Warning, configuration.Log, string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
 
-                            email.SentException = ex;
-                        }
-                        catch (SmtpException ex)
-                        {
-                            WriteToLog(EventLogEntryType.Error, configuration.Log,
-                                       string.Format(SmtpExceptionFaildToSendEmailTo, email.To), ex);
+                        email.SentException = ex;
+                    }
+                    catch (SmtpException ex)
+                    {
+                        WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(SmtpExceptionFaildToSendEmailTo, email.To), ex);
 
-                            var parameters = GetServerParametersString(configuration.ServerConfiguration);
-                            parameters += GetEmailParametersString(email, message.From.Address);
-                            configuration.Log.Error(parameters);
+                        var parameters = GetServerParametersString(configuration.ServerConfiguration);
+                        parameters += GetEmailParametersString(email, message.From.Address);
+                        configuration.Log.Error(parameters);
 
-                            email.SentException = ex;
-                        }
-                        catch (InvalidOperationException ex)
-                        {
-                            WriteToLog(EventLogEntryType.Error, configuration.Log,
-                                       string.Format(InvalidOperationExceptionFailedToSendEmailTo, message.To), ex);
+                        email.SentException = ex;
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(InvalidOperationExceptionFailedToSendEmailTo, message.To), ex);
 
-                            var parameters = GetServerParametersString(configuration.ServerConfiguration);
-                            parameters += GetEmailParametersString(email, message.From.Address);
-                            configuration.Log.Error(parameters);
+                        var parameters = GetServerParametersString(configuration.ServerConfiguration);
+                        parameters += GetEmailParametersString(email, message.From.Address);
+                        configuration.Log.Error(parameters);
 
-                            email.SentException = ex;
-                        }
-                        catch (Exception ex)
-                        {
-                            WriteToLog(EventLogEntryType.Error, configuration.Log,
-                                       string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
+                        email.SentException = ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        WriteToLog(EventLogEntryType.Error, configuration.Log, string.Format(EmailNotificationFailedToSendEmailTo, message.To), ex);
 
-                            var parameters = GetServerParametersString(configuration.ServerConfiguration);
-                            parameters += GetEmailParametersString(email, message.From.Address);
-                            configuration.Log.Error(parameters);
+                        var parameters = GetServerParametersString(configuration.ServerConfiguration);
+                        parameters += GetEmailParametersString(email, message.From.Address);
+                        configuration.Log.Error(parameters);
 
-                            email.SentException = ex;
-                        }
+                        email.SentException = ex;
+                    }
 
-                        if (configuration.ServerConfiguration.SmtpServerConnectionLimit > 0
-                            &&
-                            (serverConnectionAttempt%configuration.ServerConfiguration.SmtpServerConnectionLimit) == 0)
-                        {
-                            Thread.Sleep(new TimeSpan(0, 0, 0, 15, 0));
-                        }
+                    if (configuration.ServerConfiguration.SmtpServerConnectionLimit > 0
+                        && (serverConnectionAttempt%configuration.ServerConfiguration.SmtpServerConnectionLimit) == 0)
+                    {
+                        Thread.Sleep(new TimeSpan(0, 0, 0, 15, 0));
                     }
                 }
             }
-            WriteToLog(EventLogEntryType.Information, configuration.Log, String.Format(SentTotalOfEmails, configuration.EmailQueue.Where(e => e.IsSent).Count()));
+            WriteToLog(EventLogEntryType.Information, configuration.Log, String.Format(SentTotalOfEmails, configuration.EmailQueue.Count(e => e.IsSent)));
         }
 
         private static bool IsTestEmailDetected(Configuration configuration, MessageQueueEntity email)
@@ -127,11 +121,7 @@ namespace EmailNotification
             
             if (!isTestEmailDetected)
             {
-                isTestEmailDetected = configuration.TestEmailAccounts.Where(testEmailAccount =>
-                                                                            email.To.IndexOf(testEmailAccount,
-                                                                                             StringComparison.
-                                                                                                 OrdinalIgnoreCase) < 0)
-                    .Any();
+                isTestEmailDetected = configuration.TestEmailAccounts.Any(testEmailAccount => email.To.IndexOf(testEmailAccount, StringComparison.OrdinalIgnoreCase) < 0);
             }
 
             return isTestEmailDetected;
@@ -196,41 +186,22 @@ namespace EmailNotification
 
         private static void GetMailMessageAttachments(MessageQueueEntity email, MailMessage message)
         {
-            foreach (var messageQueueAttachementEntity in email.Attachments)
+            foreach (var messageQueueAttachmentEntity in email.Attachments)
             {
-                if (!String.IsNullOrWhiteSpace(messageQueueAttachementEntity.FileName))
+                if (!String.IsNullOrWhiteSpace(messageQueueAttachmentEntity.FileName))
                 {
-                    message.Attachments.Add(messageQueueAttachementEntity.ContentType != null
-                                                ? new Attachment(messageQueueAttachementEntity.FileName, messageQueueAttachementEntity.ContentType)
-                                                : new Attachment(messageQueueAttachementEntity.FileName));
+                    message.Attachments.Add(messageQueueAttachmentEntity.ContentType != null
+                                                ? new Attachment(messageQueueAttachmentEntity.FileName, messageQueueAttachmentEntity.ContentType)
+                                                : new Attachment(messageQueueAttachmentEntity.FileName));
                 }
-                else if (messageQueueAttachementEntity.ContentStream != null)
+                else if (messageQueueAttachmentEntity.ContentStream != null)
                 {
-                    if(messageQueueAttachementEntity.ContentType == null)
+                    if(messageQueueAttachmentEntity.ContentType == null)
                         throw new Exception("The message content type needs to be set when sending in an attachment Stream.");
 
-                    message.Attachments.Add(new Attachment(messageQueueAttachementEntity.ContentStream, messageQueueAttachementEntity.ContentType));
+                    message.Attachments.Add(new Attachment(messageQueueAttachmentEntity.ContentStream, messageQueueAttachmentEntity.ContentType));
                 }
             }
-        }
-
-        private static SmtpClient GetEmailClient(Configuration configuration)
-        {
-            var client = new SmtpClient
-                             {
-                                 Host = configuration.ServerConfiguration.SmtpServer,
-                                 EnableSsl = configuration.ServerConfiguration.IsSSLEnabled,
-                                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                                 Port = configuration.ServerConfiguration.SmtpServerPort,
-                                 UseDefaultCredentials = configuration.ServerConfiguration.UseDefaultCredentials
-                             };
-
-            if (configuration.ServerConfiguration.Timeout.HasValue) client.Timeout = configuration.ServerConfiguration.Timeout.GetValueOrDefault();
-            if (configuration.SendCompletedEventHandler != null) client.SendCompleted += configuration.SendCompletedEventHandler;
-
-            if (configuration.ServerConfiguration.SmtpServerRequiredLogin)
-                client.Credentials = new NetworkCredential(configuration.ServerConfiguration.SmtpServerUserName, configuration.ServerConfiguration.SmtpServerPassword);
-            return client;
         }
 
         private static string GetServerParametersString(IServerConfiguration serverConfiguration)
