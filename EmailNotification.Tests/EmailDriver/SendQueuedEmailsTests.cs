@@ -87,5 +87,38 @@ namespace EmailNotification.Tests.EmailDriver
             Assert.IsFalse(result.Emails.First().IsSent);
             Assert.AreEqual(0, result.EmailSent);
         }
+
+        [Test]
+        public void FailedBadEmail()
+        {
+            var serverConfig = MockRepository.GenerateMock<IServerConfiguration>();
+
+            var smtpClient = MockRepository.GenerateMock<ISmtpClient>();
+            smtpClient.Expect(s => s.Send(new MailMessage())).IgnoreArguments();
+
+            var emails = new List<MessageQueueEntity>
+                             {
+                                 new MessageQueueEntity
+                                     {
+                                         To = "bad-email",
+                                         From = "from@test.com",
+                                         Body = "Test Email",
+                                         BodyFormat = BodyFormat.PlainText,
+                                         Created = DateTime.Now
+                                     }
+                             };
+
+
+            var configuration = Master.Configure()
+                .WithServerConfiguration(serverConfig)
+                .IsEnabled(true)
+                .WithEmails(emails);
+
+            var result = Master.Execute(configuration, smtpClient);
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.IsFalse(result.Emails.First().IsSent);
+            Assert.AreEqual(0, result.EmailSent);
+        }
     }
 }

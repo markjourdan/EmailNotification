@@ -12,6 +12,10 @@ namespace EmailNotification
     {
         internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure store email.";
         internal const string ErrorToAddressNotSet = "Email Notification: 'to' property is empty.";
+        internal const string ErrorToAddressInvalid = "Email Notification: 'to' property has invalid email address.";
+        internal const string ErrorCcAddressInvalid = "Email Notification: 'CC' property has invalid email address.";
+        internal const string ErrorBccAddressInvalid = "Email Notification: 'BCC' property has invalid email address.";
+        internal const string ErrorFromAddressInvalid = "Email Notification: 'From' property has invalid email address.";
         internal const string EmailNotificationFailedToSendEmailTo = "Email Notification: failed to send email to {0}.";
         internal const string SmtpFailedRecipientsExceptionFailToSendEmailTo = "Email Notification: The message could not be delivered to the recipient for email {0}";
         internal const string InvalidOperationExceptionFailedToSendEmailTo = "Email Notification: A delivery method configuration issue has occurred. Failed to send email to {0}.";
@@ -142,7 +146,7 @@ namespace EmailNotification
                 email.SentException = new Exception(ErrorToAddressNotSet);
                 return null;
             }
-
+            
             var message = new MailMessage
                               {
                                   Priority = email.Priority,
@@ -150,23 +154,51 @@ namespace EmailNotification
                                   Subject = email.Subject,
                                   BodyEncoding = Encoding.ASCII,
                                   Body = email.Body,
-                                  IsBodyHtml = email.BodyFormat == BodyFormat.Html,
-                                  From =
-                                      String.IsNullOrWhiteSpace(email.From)
-                                          ? new MailAddress(configuration.FromDefaultEmailAddress, configuration.FromDefaultEmailName)
-                                          : new MailAddress(email.From)
+                                  IsBodyHtml = email.BodyFormat == BodyFormat.Html
                               };
+
+            
+            try
+            {
+                message.From = String.IsNullOrWhiteSpace(email.From)
+                                   ? new MailAddress(configuration.FromDefaultEmailAddress, configuration.FromDefaultEmailName)
+                                   : new MailAddress(email.From);
+            }
+            catch (Exception)
+            {
+                WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorFromAddressInvalid);
+                email.SentException = new Exception(ErrorFromAddressInvalid);
+                return null;
+            }
 
             foreach (var emailTo in email.To.Split(new[] { ';', ',' }))
             {
-                message.To.Add(new MailAddress(emailTo));
+                try
+                {
+                    message.To.Add(new MailAddress(emailTo));
+                }
+                catch (Exception)
+                {
+                    WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorToAddressInvalid);
+                    email.SentException = new Exception(ErrorToAddressInvalid);
+                    return null;
+                }
             }
 
             if (!String.IsNullOrWhiteSpace(email.Cc))
             {
                 foreach (var emailCc in email.Cc.Split(new[] { ';', ',' }))
                 {
-                    message.CC.Add(new MailAddress(emailCc));                                    
+                    try
+                    {
+                        message.CC.Add(new MailAddress(emailCc));
+                    }
+                    catch (Exception)
+                    {
+                        WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorBccAddressInvalid);
+                        email.SentException = new Exception(ErrorBccAddressInvalid);
+                        return null;
+                    }
                 }
             }
 
@@ -174,7 +206,16 @@ namespace EmailNotification
             {
                 foreach (var emailBcc in email.Bcc.Split(new[] { ';', ',' }))
                 {
-                    message.Bcc.Add(new MailAddress(emailBcc));
+                    try
+                    {
+                        message.Bcc.Add(new MailAddress(emailBcc));
+                    }
+                    catch (Exception)
+                    {
+                        WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorBccAddressInvalid);
+                        email.SentException = new Exception(ErrorBccAddressInvalid);
+                        return null;
+                    }
                 }
             }
 
