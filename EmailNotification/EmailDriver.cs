@@ -10,7 +10,7 @@ namespace EmailNotification
 {
     public class EmailDriver
     {
-        internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure store email.";
+        internal const string ErrorFromAddressNotConfigured = "Email Notification: 'from' property is empty. Make sure you configure the default from email address, or pass it in.";
         internal const string ErrorToAddressNotSet = "Email Notification: 'to' property is empty.";
         internal const string ErrorToAddressInvalid = "Email Notification: 'to' property has invalid email address.";
         internal const string ErrorCcAddressInvalid = "Email Notification: 'CC' property has invalid email address.";
