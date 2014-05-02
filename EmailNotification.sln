@@ -20,7 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C607D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{59227AA1-4F53-4CE4-9BCA-8A25012F56EB}"
 	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
 		_Build\emailNotification.build = _Build\emailNotification.build
+		publish nuget.bat = publish nuget.bat
 		_Build\shared.build = _Build\shared.build
 	EndProjectSection
 EndProject
