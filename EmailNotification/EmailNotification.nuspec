@@ -5,10 +5,13 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <title>Email Notification</title>
     <licenseUrl>http://emailnotification.codeplex.com/license</licenseUrl>
     <projectUrl>http://emailnotification.codeplex.com</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
+    <summary>$description$</summary>
     <tags>email wrapper</tags>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/EmailNotification.0.1.1298.29.png</iconUrl>
   </metadata>
 </package>
