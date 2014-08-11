@@ -175,7 +175,8 @@ namespace EmailNotification
             {
                 try
                 {
-                    message.To.Add(new MailAddress(emailTo));
+                    if (!String.IsNullOrWhiteSpace(emailTo))
+                        message.To.Add(new MailAddress(emailTo));
                 }
                 catch (Exception)
                 {
