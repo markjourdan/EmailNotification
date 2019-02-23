@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <title>Email Notification NETStandard</title>
+    <licenseUrl>http://emailnotification.codeplex.com/license</licenseUrl>
+    <projectUrl>http://emailnotification.codeplex.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <summary>$description$</summary>
+    <tags>email wrapper</tags>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/EmailNotification.0.1.1298.29.png</iconUrl>
+  </metadata>
+</package>
