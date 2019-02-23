@@ -11,13 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.Tests", "EmailNotification.Tests\EmailNotification.Tests.csproj", "{D8022C88-5080-47B3-9567-C80D6A1D3482}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C607DE0-08C8-40B6-9A35-4B278C5CD906}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{59227AA1-4F53-4CE4-9BCA-8A25012F56EB}"
 	ProjectSection(SolutionItems) = preProject
 		build.bat = build.bat
@@ -26,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{59227A
 		_Build\shared.build = _Build\shared.build
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.Core", "EmailNotification.Core\EmailNotification.Core.csproj", "{1691EF35-D2AE-46A6-B3D0-209957251618}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.Core", "EmailNotification.Core\EmailNotification.Core.csproj", "{1691EF35-D2AE-46A6-B3D0-209957251618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,9 +52,9 @@ Global
 		{D8022C88-5080-47B3-9567-C80D6A1D3482} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {01CDD364-E74C-4F10-9038-09C179064C9E}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 EndGlobal
