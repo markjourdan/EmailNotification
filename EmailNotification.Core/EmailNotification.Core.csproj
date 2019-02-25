@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/markjourdan/EmailNotification</PackageProjectUrl>
     <PackageTags>email wrapper</PackageTags>
     <Product>Email Notification NETStandard</Product>
-    <PackageLicenseUrl>http://emailnotification.codeplex.com/license</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/markjourdan/EmailNotification/blob/master/license.md</PackageLicenseUrl>
     <Authors>Mark Jourdan</Authors>
     <Company />
     <PackageIconUrl>https://nugetgallery.blob.core.windows.net/icons/EmailNotification.0.1.1298.29.png</PackageIconUrl>

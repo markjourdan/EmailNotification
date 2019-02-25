@@ -6,8 +6,8 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <title>Email Notification</title>
-    <licenseUrl>http://emailnotification.codeplex.com/license</licenseUrl>
-    <projectUrl>http://emailnotification.codeplex.com</projectUrl>
+    <licenseUrl>https://github.com/markjourdan/EmailNotification/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/markjourdan/EmailNotification</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
