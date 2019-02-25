@@ -5,5 +5,21 @@ Email Notification can be configured fluently, or through the app.config or web.
 
 # NuGet Supprt
 
-Email notification is now available via NuGet: http://www.nuget.org/List/Packages/EmailNotification
+Email notification is now available via NuGet: 
+
+## .NET 4.7.2
+
 PM> Install-Package EmailNotification
+
+https://www.nuget.org/List/Packages/EmailNotification
+
+
+## NETStandard
+
+PM> Install-Package EmailNotification.Core
+
+https://www.nuget.org/packages/EmailNotification.Core
+
+  
+
+
