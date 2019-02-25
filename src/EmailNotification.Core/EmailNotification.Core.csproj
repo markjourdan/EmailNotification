@@ -12,6 +12,8 @@
     <Company />
     <PackageIconUrl>https://nugetgallery.blob.core.windows.net/icons/EmailNotification.0.1.1298.29.png</PackageIconUrl>
     <Description>a wrapper that handles sending emails</Description>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>EmailNotification.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
