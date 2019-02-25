@@ -1,6 +1,8 @@
 @ECHO OFF
-SET /p ver= What is the version number?
+@echo SET /p ver= What is the version number?
 
-EmailNotification\nuget.exe pack -Version %ver% -symbols EmailNotification\EmailNotification.csproj
-EmailNotification\nuget.exe push .\EmailNotification.%ver%.nupkg
+SET mypath = %cd%
+
+@echo EmailNotification\nuget.exe pack -Version %ver% -symbols EmailNotification\EmailNotification.csproj
+@echo EmailNotification\nuget.exe push .\EmailNotification.%ver%.nupkg
 pause
