@@ -12,6 +12,16 @@ namespace EmailNotification
             IsTestEmailAccountsBlocked = false;
         }
 
+        internal IServerConfiguration ServerConfiguration { get; set; }
+        internal bool Enabled { get; set; }
+        internal string FromDefaultEmailAddress { get; set; }
+        internal string FromDefaultEmailName { get; set; }
+        internal IEnumerable<MessageQueueEntity> EmailQueue { get; set; }
+        internal bool IsTestEmailAccountsBlocked { get; set; }
+        internal IEnumerable<string> TestEmailAccounts { get; set; }
+        internal IEmailLog Log { get; set; }
+        internal SendCompletedEventHandler SendCompletedEventHandler { get; set; }
+
         public Configuration WithServerConfiguration(IServerConfiguration serverConfiguration)
         {
             ServerConfiguration = serverConfiguration;
@@ -55,16 +65,6 @@ namespace EmailNotification
             SendCompletedEventHandler = sendCompletedEventHandler;
             return this;
         }
-
-        internal IServerConfiguration ServerConfiguration { get; set; }
-        internal bool Enabled { get; set; }
-        internal string FromDefaultEmailAddress { get; set; }
-        internal string FromDefaultEmailName { get; set; }
-        internal IEnumerable<MessageQueueEntity> EmailQueue { get; set; }
-        internal bool IsTestEmailAccountsBlocked { get; set; }
-        internal IEnumerable<string> TestEmailAccounts { get; set; }
-        internal IEmailLog Log { get; set; }
-        internal SendCompletedEventHandler SendCompletedEventHandler { get; set; }
     }
 
     internal class DefaultServerConfiguration : IServerConfiguration

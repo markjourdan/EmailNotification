@@ -154,5 +154,73 @@ namespace EmailNotification.Tests.EmailDriver
             Assert.AreEqual(0, result.EmailSent);
             Assert.IsTrue(result.Emails.First().SentException.Message.Contains("'from' property is empty"));
         }
+
+        [Test]
+        public void FailedBadCcEmailAddress()
+        {
+            var serverConfig = MockRepository.GenerateMock<IServerConfiguration>();
+
+            var smtpClient = MockRepository.GenerateMock<ISmtpClient>();
+            smtpClient.Expect(s => s.Send(new MailMessage())).IgnoreArguments();
+
+            var emails = new List<MessageQueueEntity>
+            {
+                new MessageQueueEntity
+                {
+                    To = "good@test.com",
+                    Cc = "bad-email",
+                    From = "from@test.com",
+                    Body = "Test Email",
+                    BodyFormat = BodyFormat.PlainText,
+                    Created = DateTime.Now
+                }
+            };
+
+            var configuration = Master.Configure()
+                .WithServerConfiguration(serverConfig)
+                .IsEnabled(true)
+                .WithEmails(emails);
+
+            var result = Master.Execute(configuration, smtpClient);
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.IsFalse(result.Emails.First().IsSent);
+            Assert.AreEqual(0, result.EmailSent);
+            Assert.IsTrue(result.Emails.First().SentException.Message.Contains("'CC' property"));
+        }
+
+        [Test]
+        public void FailedBadBccEmailAddress()
+        {
+            var serverConfig = MockRepository.GenerateMock<IServerConfiguration>();
+
+            var smtpClient = MockRepository.GenerateMock<ISmtpClient>();
+            smtpClient.Expect(s => s.Send(new MailMessage())).IgnoreArguments();
+
+            var emails = new List<MessageQueueEntity>
+            {
+                new MessageQueueEntity
+                {
+                    To = "good@test.com",
+                    Bcc = "bad-email",
+                    From = "from@test.com",
+                    Body = "Test Email",
+                    BodyFormat = BodyFormat.PlainText,
+                    Created = DateTime.Now
+                }
+            };
+
+            var configuration = Master.Configure()
+                .WithServerConfiguration(serverConfig)
+                .IsEnabled(true)
+                .WithEmails(emails);
+
+            var result = Master.Execute(configuration, smtpClient);
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.IsFalse(result.Emails.First().IsSent);
+            Assert.AreEqual(0, result.EmailSent);
+            Assert.IsTrue(result.Emails.First().SentException.Message.Contains("'BCC' property"));
+        }
     }
 }
