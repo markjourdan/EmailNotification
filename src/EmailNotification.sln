@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification", "EmailNotification\EmailNotification.csproj", "{47720915-7939-4244-8D40-E62900916A1B}"
 EndProject
@@ -25,7 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{947398
 		NuGet.config = NuGet.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest", "EmailNotification.ServiceTest\EmailNotification.ServiceTest.csproj", "{F7801F7E-B8CB-4347-9F88-6DC64337B46E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{2C75FBB0-4075-43F2-9029-2C2BB389ED7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest48", "Samples\EmailNotification.ServiceTest.48\EmailNotification.ServiceTest48.csproj", "{F7801F7E-B8CB-4347-9F88-6DC64337B46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest47", "Samples\EmailNotification.ServiceTest.47\EmailNotification.ServiceTest47.csproj", "{33B8F52D-5651-4DBF-A23C-C6667BD0423D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest20", "Samples\EmailNotification.ServiceTest20\EmailNotification.ServiceTest20.csproj", "{839B9EF5-0810-4340-B02C-6AA200523FA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.ServiceTest22", "Samples\EmailNotification.ServiceTest22\EmailNotification.ServiceTest22.csproj", "{EB6C7957-C2B0-49C6-96A1-5171320ABE72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,18 +57,33 @@ Global
 		{F7801F7E-B8CB-4347-9F88-6DC64337B46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7801F7E-B8CB-4347-9F88-6DC64337B46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7801F7E-B8CB-4347-9F88-6DC64337B46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B8F52D-5651-4DBF-A23C-C6667BD0423D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B8F52D-5651-4DBF-A23C-C6667BD0423D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B8F52D-5651-4DBF-A23C-C6667BD0423D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B8F52D-5651-4DBF-A23C-C6667BD0423D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{839B9EF5-0810-4340-B02C-6AA200523FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839B9EF5-0810-4340-B02C-6AA200523FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839B9EF5-0810-4340-B02C-6AA200523FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839B9EF5-0810-4340-B02C-6AA200523FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D8022C88-5080-47B3-9567-C80D6A1D3482} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
-		{F7801F7E-B8CB-4347-9F88-6DC64337B46E} = {B80A2091-F58E-4886-94E4-B4CE8AB40E91}
+		{F7801F7E-B8CB-4347-9F88-6DC64337B46E} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
+		{33B8F52D-5651-4DBF-A23C-C6667BD0423D} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
+		{839B9EF5-0810-4340-B02C-6AA200523FA3} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
+		{EB6C7957-C2B0-49C6-96A1-5171320ABE72} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {01CDD364-E74C-4F10-9038-09C179064C9E}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 EndGlobal

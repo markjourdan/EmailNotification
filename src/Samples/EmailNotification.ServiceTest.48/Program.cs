@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 
-namespace EmailNotification.ServiceTest
+namespace EmailNotification.ServiceTest48
 {
-    public class Class1
+    public class Program
     {
-        [Test]
-        public void Main()
+        static void Main(string[] args)
         {
             var emails = new List<MessageQueueEntity>
                              {
