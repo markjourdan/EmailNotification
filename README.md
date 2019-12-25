@@ -14,7 +14,7 @@ PM> Install-Package EmailNotification
 https://www.nuget.org/List/Packages/EmailNotification
 
 
-## NETStandard
+## NETStandard 2.0, 2.1 / .NET 4.7.2, 4.8
 
 PM> Install-Package EmailNotification.Core
 
