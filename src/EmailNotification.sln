@@ -9,15 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B80A2091
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.Tests", "EmailNotification.Tests\EmailNotification.Tests.csproj", "{D8022C88-5080-47B3-9567-C80D6A1D3482}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{59227AA1-4F53-4CE4-9BCA-8A25012F56EB}"
-	ProjectSection(SolutionItems) = preProject
-		..\_Build\build.bat = ..\_Build\build.bat
-		..\_Build\build.ps1 = ..\_Build\build.ps1
-		..\_Build\emailNotification.build = ..\_Build\emailNotification.build
-		..\_Build\publish nuget.bat = ..\_Build\publish nuget.bat
-		..\_Build\shared.build = ..\_Build\shared.build
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.Core", "EmailNotification.Core\EmailNotification.Core.csproj", "{1691EF35-D2AE-46A6-B3D0-209957251618}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9473988F-0EDE-42BD-A6AF-6EC5F78A3FB4}"
@@ -31,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest47", "Samples\EmailNotification.ServiceTest.47\EmailNotification.ServiceTest47.csproj", "{33B8F52D-5651-4DBF-A23C-C6667BD0423D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest20", "Samples\EmailNotification.ServiceTest20\EmailNotification.ServiceTest20.csproj", "{839B9EF5-0810-4340-B02C-6AA200523FA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.ServiceTest20", "Samples\EmailNotification.ServiceTest20\EmailNotification.ServiceTest20.csproj", "{839B9EF5-0810-4340-B02C-6AA200523FA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.ServiceTest22", "Samples\EmailNotification.ServiceTest22\EmailNotification.ServiceTest22.csproj", "{EB6C7957-C2B0-49C6-96A1-5171320ABE72}"
 EndProject
@@ -81,9 +72,9 @@ Global
 		{EB6C7957-C2B0-49C6-96A1-5171320ABE72} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {01CDD364-E74C-4F10-9038-09C179064C9E}
-		BuildVersion_BuildVersioningStyle = None.None.None.None
-		BuildVersion_UpdateFileVersion = False
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		SolutionGuid = {01CDD364-E74C-4F10-9038-09C179064C9E}
 	EndGlobalSection
 EndGlobal
