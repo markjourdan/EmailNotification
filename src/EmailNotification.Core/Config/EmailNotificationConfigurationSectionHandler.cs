@@ -58,8 +58,8 @@ namespace EmailNotification.Core.Config
             }
             var settings = XElement.Parse(xml);
             var settingAttributes = settings.Attributes();
-		    var settingElements = settings.Elements();
-            if (Equals(settingAttributes.Count(), 0) && Equals(settingElements.Count(), 0))
+		    var settingElements = settings.Elements().ToList();
+            if (Equals(settingAttributes.Count(), 0) && Equals(settingElements.Count, 0))
             {
                 throw new ConfigurationErrorsException("There were no settings configured for the Email Notifications");
             }
@@ -68,7 +68,7 @@ namespace EmailNotification.Core.Config
 
 		    var config = new EmailNotificationConfig
 		                     {
-		                         IsEnabled = isEnabled == null ? false : Convert.ToBoolean(isEnabled.Value)
+		                         IsEnabled = isEnabled != null && Convert.ToBoolean(isEnabled.Value)
 		                     };
 
             foreach (var setting in settingElements)

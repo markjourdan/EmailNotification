@@ -48,7 +48,7 @@ namespace EmailNotification.Core
 
             if (!configuration.EmailQueue.Any()) return;
 
-            configuration.EmailQueue = configuration.EmailQueue.OrderByDescending(e => e.Created);
+            configuration.EmailQueue = configuration.EmailQueue.OrderByDescending(e => e.Created).ToList();
             var serverConnectionAttempt = 0;
 
             foreach (var email in configuration.EmailQueue)

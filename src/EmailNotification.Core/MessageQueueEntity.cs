@@ -34,7 +34,7 @@ namespace EmailNotification.Core
 
         public Exception SentException { get; set; }
 
-        public IEnumerable<MessageQueueAttachementEntity> Attachments { get; set; }
+        public IEnumerable<MessageQueueAttachmentEntity> Attachments { get; set; }
     }
 
     public enum BodyFormat

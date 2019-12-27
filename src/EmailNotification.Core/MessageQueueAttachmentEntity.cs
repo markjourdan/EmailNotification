@@ -3,7 +3,7 @@ using System.Net.Mime;
 
 namespace EmailNotification.Core
 {
-    public class MessageQueueAttachementEntity
+    public class MessageQueueAttachmentEntity
     {
         public string FileName { get; set; }
         public ContentType ContentType { get; set; }
