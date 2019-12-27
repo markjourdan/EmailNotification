@@ -7,14 +7,15 @@ Email Notification can be configured fluently, or through the app.config or web.
 
 Email notification is now available via NuGet: 
 
-## .NET 4.7.2
+## EmailNotification > .NET 4.7.2 [deprecated]
+This package has been deprecated in favor of the EmailNotification.Core package. The new package is built using the .NETStandard framework and support 4.7.2. It is recommended to migrate to the new package.
 
 PM> Install-Package EmailNotification
 
 https://www.nuget.org/List/Packages/EmailNotification
 
 
-## NETStandard 2.0, 2.1 / .NET 4.7.2, 4.8
+## EmailNotification.Core > NETStandard 2.0, 2.1 / .NET 4.7.2, 4.8
 
 PM> Install-Package EmailNotification.Core
 
