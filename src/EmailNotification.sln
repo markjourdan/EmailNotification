@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.ServiceTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification.ServiceTest22", "Samples\EmailNotification.ServiceTest22\EmailNotification.ServiceTest22.csproj", "{EB6C7957-C2B0-49C6-96A1-5171320ABE72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotification.ServiceTest50", "Samples\EmailNotification.ServiceTest50\EmailNotification.ServiceTest50.csproj", "{31262B21-9B71-4870-AC63-94144E37ED77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB6C7957-C2B0-49C6-96A1-5171320ABE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31262B21-9B71-4870-AC63-94144E37ED77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31262B21-9B71-4870-AC63-94144E37ED77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31262B21-9B71-4870-AC63-94144E37ED77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31262B21-9B71-4870-AC63-94144E37ED77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,11 +76,12 @@ Global
 		{33B8F52D-5651-4DBF-A23C-C6667BD0423D} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
 		{839B9EF5-0810-4340-B02C-6AA200523FA3} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
 		{EB6C7957-C2B0-49C6-96A1-5171320ABE72} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
+		{31262B21-9B71-4870-AC63-94144E37ED77} = {2C75FBB0-4075-43F2-9029-2C2BB389ED7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {01CDD364-E74C-4F10-9038-09C179064C9E}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 EndGlobal
