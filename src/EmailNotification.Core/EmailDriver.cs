@@ -17,6 +17,7 @@ namespace EmailNotification.Core
         internal const string ErrorToAddressInvalid = "Email Notification: 'to' property has invalid email address.";
         internal const string ErrorCcAddressInvalid = "Email Notification: 'CC' property has invalid email address.";
         internal const string ErrorBccAddressInvalid = "Email Notification: 'BCC' property has invalid email address.";
+        internal const string ErrorAttachment = "Email Notification: Unable to attach an attachment.";
 
         internal const string ErrorFromAddressInvalid =
             "Email Notification: 'From' property has invalid email address.";
@@ -230,7 +231,18 @@ namespace EmailNotification.Core
                     }
 
             if (email.Attachments != null && email.Attachments.Any())
-                GetMailMessageAttachments(email, message);
+            {
+                try
+                {
+                    GetMailMessageAttachments(email, message);
+                }
+                catch (Exception)
+                {
+                    WriteToLog(EventLogEntryType.Warning, configuration.Log, ErrorAttachment);
+                    email.SentException = new Exception(ErrorAttachment);
+                    return null;
+                }
+            }
 
             return message;
         }
